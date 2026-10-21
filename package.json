@@ -1,0 +1,18 @@
+{
+  "name": "cinema-microservices",
+  "version": "1.0.0",
+  "scripts": {
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "getaway-service/**/*.{ts,tsx,js,mjs,cjs}": "npm --prefix getaway-service exec -- eslint --fix"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0"
+  }
+}
