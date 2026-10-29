@@ -32,8 +32,8 @@ services:
     restart: always
     mem_limit: 1g
     ports:
-      - 5672:5672
-      - 15672:15672
+      - "5672:5672"
+      - "15672:15672"
     environment:
       RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
       RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
@@ -42,11 +42,95 @@ services:
     networks:
       - cinema-microservices
 
+  postgres-exporter:
+    container_name: postgres-exporter
+    image: prometheuscommunity/postgres-exporter
+    restart: always
+    environment:
+      DATA_SOURCE_NAME: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/postgres?sslmode=disable"
+    ports:
+      - "9187:9187"
+    networks:
+      - cinema-microservices
+    depends_on:
+      - postgres
+
+  redis-exporter:
+    container_name: redis-exporter
+    image: oliver006/redis_exporter
+    restart: always
+    command:
+      ["-redis.addr=redis://redis:6379", "-redis.password=${REDIS_PASSWORD}"]
+    ports:
+      - "9121:9121"
+    networks:
+      - cinema-microservices
+    depends_on:
+      - redis
+
+  rabbitmq-exporter:
+    container_name: rabbitmq-exporter
+    image: kbudde/rabbitmq-exporter
+    restart: always
+    environment:
+      RABBIT_URL: "http://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@rabbitmq:15672"
+    ports:
+      - "9419:9419"
+    networks:
+      - cinema-microservices
+    depends_on:
+      - rabbitmq
+
+  node-exporter:
+    container_name: node-exporter
+    image: prom/node-exporter
+    restart: always
+    ports:
+      - "9100:9100"
+    networks:
+      - cinema-microservices
+
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:latest
+    restart: always
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
+    networks:
+      - cinema-microservices
+
+  jaeger:
+    container_name: jaeger
+    image: jaegertracing/all-in-one:1.47
+    restart: unless-stopped
+    ports:
+      - 16686:16686
+      - 4317:4317
+      - 4318:4318
+    networks:
+      - cinema-microservices
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:10.2.3
+    restart: unless-stopped
+    depends_on:
+      - prometheus
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    ports:
+      - "3002:3000"
+    networks:
+      - cinema-microservices
+
 volumes:
   postgres_data:
   redis_data:
   rabbitmq_data:
+  grafana-storage:
 
 networks:
   cinema-microservices:
-        external: true
+    external: true
