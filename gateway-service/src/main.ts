@@ -1,0 +1,25 @@
+import { Logger} from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { NestFactory } from '@nestjs/core';
+import cookieParser from 'cookie-parser';
+
+import { AppModule } from './core/app.module';
+
+async function bootstrap() {
+	const app = await NestFactory.create(AppModule);
+
+	const config = app.get<ConfigService>(ConfigService);
+	const logger = new Logger();
+
+	app.use(cookieParser(config.getOrThrow<string>('COOKIES_SECRET')));
+
+	const port = config.getOrThrow<number>('HTTP_PORT');
+	const host = config.getOrThrow<string>('HTTP_HOST');
+
+	await app.listen(port);
+
+	logger.log(`🚀 Gateway started: ${host}`);
+	logger.log(`📚 Swagger: ${host}/docs`);
+}
+
+void bootstrap();
