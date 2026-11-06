@@ -1,6 +1,7 @@
 import { JwtAuthModule } from '@cinema-microservices-nest/jwt-auth';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { AccountModule } from 'src/modules/account/account.module';
 import { AuthModule } from 'src/modules/auth/auth.module';
 import { GrpcClientsModule } from 'src/shared/grpc';
 
@@ -24,6 +25,7 @@ import { getJwtConfig } from './config';
 		}),
 		GrpcClientsModule,
 		AuthModule,
+		AccountModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

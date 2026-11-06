@@ -10,6 +10,12 @@ import { createGrpcClient } from './grpc-client.factory';
 			isGlobal: true,
 			clients: [
 				createGrpcClient({
+					name: 'ACCOUNT_PACKAGE',
+					packageName: 'account.v1',
+					protoPath: PROTO_PATHS.ACCOUNT,
+					urlConfigKey: 'ACCOUNT_GRPC_URL',
+				}),
+				createGrpcClient({
 					name: 'AUTH_PACKAGE',
 					packageName: 'auth.v1',
 					protoPath: PROTO_PATHS.AUTH,
