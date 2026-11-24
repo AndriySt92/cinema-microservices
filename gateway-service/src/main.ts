@@ -9,7 +9,8 @@ import {
 	getValidationPipeConfig,
 	setupSwagger,
 } from './core/config';
-import { GrpcExceptionFilter } from './shared/filters/grpc-exception.filter';
+import './observability/tracing';
+import { GrpcExceptionFilter } from './shared/filters';
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
