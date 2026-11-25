@@ -1,4 +1,8 @@
-import { GrpcClientBase } from '@cinema-microservices-nest/common';
+import {
+	GRPC_CLIENT_TOKENS,
+	GRPC_SERVICE_NAMES,
+	GrpcClientBase,
+} from '@cinema-microservices-nest/common';
 import type {
 	BookingServiceClient,
 	GetUserBookingsRequest,
@@ -10,8 +14,8 @@ import { lastValueFrom } from 'rxjs';
 
 @Injectable()
 export class BookingClientGrpc extends GrpcClientBase<BookingServiceClient> {
-	constructor(@Inject('BOOKING_PACKAGE') client: ClientGrpc) {
-		super(client, 'BookingService');
+	constructor(@Inject(GRPC_CLIENT_TOKENS.BOOKING) client: ClientGrpc) {
+		super(client, GRPC_SERVICE_NAMES.BOOKING);
 	}
 
 	public getUserBookings(

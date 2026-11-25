@@ -1,0 +1,11 @@
+export { AccountModule } from './account';
+export { AuthModule } from './auth';
+export { BookingModule } from './booking';
+export { CategoryModule } from './category';
+export { CinemaModule } from './cinema';
+export { HallModule } from './hall';
+export { MediaModule } from './media';
+export { MovieModule } from './movie';
+export { ScreeningModule } from './screening';
+export { SeatModule } from './seat';
+export { UsersModule } from './users';

@@ -8,7 +8,8 @@ import {
 	Post,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
-import { CurrentUser, Protected } from 'src/shared/decorators';
+
+import { CurrentUser, Protected } from '@/shared/decorators';
 
 import { AccountClientGrpc } from './account.grpc';
 import {
@@ -17,12 +18,6 @@ import {
 	InitEmailChangeRequest,
 	InitPhoneChangeRequest,
 } from './dto';
-
-enum Role {
-	USER = 0,
-	ADMIN = 1,
-	UNRECOGNIZED = -1,
-}
 
 @Controller('account')
 export class AccountController {
@@ -33,7 +28,7 @@ export class AccountController {
 		description: 'Return user account',
 	})
 	@ApiBearerAuth()
-	@Protected(Role.ADMIN)
+	@Protected()
 	@Get('account')
 	@HttpCode(HttpStatus.OK)
 	public getAccount(

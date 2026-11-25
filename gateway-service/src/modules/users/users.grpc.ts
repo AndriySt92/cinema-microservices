@@ -1,3 +1,8 @@
+import {
+	GRPC_CLIENT_TOKENS,
+	GRPC_SERVICE_NAMES,
+	GrpcClientBase,
+} from '@cinema-microservices-nest/common';
 import type {
 	CreateUserRequest,
 	CreateUserResponse,
@@ -10,12 +15,11 @@ import type {
 import { Inject, Injectable } from '@nestjs/common';
 import type { ClientGrpc } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
-import { GrpcClientBase } from 'src/shared/grpc';
 
 @Injectable()
 export class UsersClientGrpc extends GrpcClientBase<UsersServiceClient> {
-	public constructor(@Inject('USERS_PACKAGE') client: ClientGrpc) {
-		super(client, 'UsersService');
+	public constructor(@Inject(GRPC_CLIENT_TOKENS.USERS) client: ClientGrpc) {
+		super(client, GRPC_SERVICE_NAMES.USERS);
 	}
 
 	public getMe(request: GetMeRequest): Promise<GetMeResponse> {

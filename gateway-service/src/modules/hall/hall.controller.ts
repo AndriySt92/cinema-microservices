@@ -9,6 +9,9 @@ import {
 } from '@nestjs/common';
 import { ApiOperation } from '@nestjs/swagger';
 
+import { Protected } from '@/shared/decorators';
+import { Role } from '@/shared/guards';
+
 import { CreateHallRequest } from './dto';
 import { HallClientGrpc } from './hall.grpc';
 
@@ -32,7 +35,7 @@ export class HallController {
 		summary: 'Create a new hall',
 		description: 'Creates a new hall with the provided details.',
 	})
-	// @Protected(Role.ADMIN)
+	@Protected(Role.ADMIN)
 	@Post()
 	@HttpCode(HttpStatus.CREATED)
 	public async create(@Body() dto: CreateHallRequest) {

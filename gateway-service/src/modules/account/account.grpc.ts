@@ -1,3 +1,8 @@
+import {
+	GRPC_CLIENT_TOKENS,
+	GRPC_SERVICE_NAMES,
+	GrpcClientBase,
+} from '@cinema-microservices-nest/common';
 import type {
 	AccountServiceClient,
 	ConfirmEmailChangeRequest,
@@ -10,12 +15,11 @@ import type {
 import { Inject, Injectable } from '@nestjs/common';
 import type { ClientGrpc } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
-import { GrpcClientBase } from 'src/shared/grpc';
 
 @Injectable()
 export class AccountClientGrpc extends GrpcClientBase<AccountServiceClient> {
-	public constructor(@Inject('ACCOUNT_PACKAGE') client: ClientGrpc) {
-		super(client, 'AccountService');
+	public constructor(@Inject(GRPC_CLIENT_TOKENS.ACCOUNT) client: ClientGrpc) {
+		super(client, GRPC_SERVICE_NAMES.ACCOUNT);
 	}
 
 	public getAccount(request: GetAccountRequest): Promise<GetAccountResponse> {

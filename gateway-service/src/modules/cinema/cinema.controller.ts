@@ -8,6 +8,9 @@ import {
 } from '@nestjs/common';
 import { ApiOperation } from '@nestjs/swagger';
 
+import { Protected } from '@/shared/decorators';
+import { Role } from '@/shared/guards';
+
 import { CinemaClientGrpc } from './cinema.grpc';
 import { CreateCinemaRequest } from './dto';
 
@@ -31,7 +34,7 @@ export class CinemaController {
 		summary: 'Create a cinema',
 		description: 'Creates a new cinema with the provided information.',
 	})
-	// @Protected(Role.ADMIN)
+	@Protected(Role.ADMIN)
 	@Post()
 	@HttpCode(HttpStatus.CREATED)
 	public async create(@Body() dto: CreateCinemaRequest) {

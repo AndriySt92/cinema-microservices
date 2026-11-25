@@ -7,7 +7,8 @@ import {
 	Query,
 } from '@nestjs/common';
 import { ApiOperation } from '@nestjs/swagger';
-import { TimestampMapper } from 'src/shared/mappers';
+
+import { TimestampMapper } from '@/shared/mappers';
 
 import { GetMoviesRequest } from './dto';
 import { MovieClientGrpc } from './movie.grpc';

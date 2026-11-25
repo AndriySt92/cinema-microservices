@@ -21,7 +21,8 @@ import {
 	ApiOperation,
 } from '@nestjs/swagger';
 import { randomBytes } from 'crypto';
-import { CurrentUser, Protected } from 'src/shared/decorators';
+
+import { CurrentUser, Protected } from '@/shared/decorators';
 
 import { MediaClientGrpc } from '../media/media.grpc';
 

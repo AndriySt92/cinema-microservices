@@ -1,6 +1,7 @@
 import { Controller, Get, HttpCode, HttpStatus } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
-import { CurrentUser, Protected } from 'src/shared/decorators';
+
+import { CurrentUser, Protected } from '@/shared/decorators';
 
 import { BookingClientGrpc } from './booking.grpc';
 

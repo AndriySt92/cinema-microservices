@@ -1,9 +1,21 @@
+import { GrpcClientsModule } from '@cinema-microservices-nest/common';
 import { JwtAuthModule } from '@cinema-microservices-nest/jwt-auth';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { AccountModule } from 'src/modules/account/account.module';
-import { AuthModule } from 'src/modules/auth/auth.module';
-import { GrpcClientsModule } from 'src/shared/grpc';
+
+import {
+	AccountModule,
+	AuthModule,
+	BookingModule,
+	CategoryModule,
+	CinemaModule,
+	HallModule,
+	MediaModule,
+	MovieModule,
+	ScreeningModule,
+	SeatModule,
+	UsersModule,
+} from '@/modules';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -23,9 +35,30 @@ import { getJwtConfig } from './config';
 			useFactory: getJwtConfig,
 			inject: [ConfigService],
 		}),
-		GrpcClientsModule,
+		GrpcClientsModule.register(
+			'CINEMA',
+			'SEAT',
+			'HALL',
+			'SCREENING',
+			'MOVIE',
+			'ACCOUNT',
+			'AUTH',
+			'CATEGORY',
+			'MEDIA',
+			'USERS',
+			'BOOKING',
+		),
 		AuthModule,
 		AccountModule,
+		UsersModule,
+		MediaModule,
+		MovieModule,
+		CategoryModule,
+		CinemaModule,
+		HallModule,
+		SeatModule,
+		ScreeningModule,
+		BookingModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

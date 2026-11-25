@@ -1,3 +1,8 @@
+import {
+	GRPC_CLIENT_TOKENS,
+	GRPC_SERVICE_NAMES,
+	GrpcClientBase,
+} from '@cinema-microservices-nest/common';
 import type {
 	CreateScreeningResponse,
 	GetScreeningRequest,
@@ -10,14 +15,15 @@ import type {
 import { Inject, Injectable } from '@nestjs/common';
 import type { ClientGrpc } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
-import { GrpcClientBase } from 'src/shared/grpc';
 
 import { CreateScreeningRequest, GetScreeningsRequest } from './dto';
 
 @Injectable()
 export class ScreeningClientGrpc extends GrpcClientBase<ScreeningServiceClient> {
-	public constructor(@Inject('SCREENING_PACKAGE') client: ClientGrpc) {
-		super(client, 'ScreeningService');
+	public constructor(
+		@Inject(GRPC_CLIENT_TOKENS.SCREENING) client: ClientGrpc,
+	) {
+		super(client, GRPC_SERVICE_NAMES.SCREENING);
 	}
 
 	public createScreening(

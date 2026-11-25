@@ -57,6 +57,23 @@ export class CreateHallRequest {
 	@IsNotEmpty()
 	public cinemaId!: string;
 
+	@ApiProperty({
+		type: () => [RowConfig],
+		example: [
+			{
+				row: 1,
+				columns: 15,
+				type: SeatType.CHAIR,
+				price: 200,
+			},
+			{
+				row: 2,
+				columns: 10,
+				type: SeatType.SOFA2,
+				price: 350,
+			},
+		],
+	})
 	@IsArray()
 	@ValidateNested({ each: true })
 	@Type(() => RowConfig)
