@@ -128,6 +128,31 @@ services:
     networks:
       - cinema-microservices
 
+  loki:
+    container_name: loki
+    image: grafana/loki:2.9.1
+    restart: unless-stopped
+    volumes:
+      - ./loki-config.yml:/etc/loki/config.yaml
+      - ./loki-data:/loki
+      - ./loki-wal:/wal
+    command: -config.file=/etc/loki/config.yaml
+    ports:
+      - "3100:3100"
+    networks:
+      - cinema-microservices
+
+  promtail:
+    container_name: promtail
+    image: grafana/promtail:2.9.1
+    restart: unless-stopped
+    volumes:
+      - ./promtail-config.yml:/etc/promtail/config.yml
+      - ../logs:/var/log/services
+    command: -config.file=/etc/promtail/config.yml
+    networks:
+      - cinema-microservices
+
   grafana:
     container_name: grafana
     image: grafana/grafana:10.2.3
